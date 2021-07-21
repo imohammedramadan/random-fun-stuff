@@ -1,18 +1,22 @@
 @echo off
 
+@REM Create Downloads folder
+if not exist Downloads mkdir Downloads
+@REM Create Downloads folder
+
 @REM Checking if youtube-dl is installed
 if not exist youtube-dl.exe GOTO YTDL
 @REM Checking if youtube-dl is installed
 
 @REM Checking if FFMPEG is installed
-move ffmpeg*build ffmpeg
+if not exist ffmpeg\bin\ffmpeg.exe move ffmpeg*build ffmpeg
 if not exist ffmpeg\bin\ffmpeg.exe GOTO NOFFMPEGEND
 @REM Checking if FFMPEG is installed
 
 @REM Variables
-set MKVOutput=--merge-output-format mkv
-set MP4Output=--merge-output-format mp4
-set FFMPEGLOC=--ffmpeg-location ffmpeg\bin\ffmpeg.exe
+set AUDIOCONFIGLOC=--config-location Config\A-config.ini
+set HDCONFIGLOC=--config-location Config\V-HDconfig.ini
+set FHDCONFIGLOC=--config-location Config\V-FHDconfig.ini
 @REM Variables
 
 @REM Program start
@@ -28,7 +32,7 @@ IF /I %AudioOrVideo% EQU A ( GOTO AUDIOONLY ) else ( GOTO AUDIOANDVIDEO )
 
 @REM Audio only download
 :AUDIOONLY
-youtube-dl -f 140 %VideoURL%
+youtube-dl %AUDIOCONFIGLOC% %VideoURL%
 GOTO END
 @REM Audio only download
 
@@ -38,18 +42,18 @@ SET /P HDorFHD= Do you want to download HD/720p or FHD/1080p? [HD/FHD]
 IF /I %HDorFHD% EQU HD ( GOTO VIDEOHD ) else ( GOTO VIDEOFHD )
 @REM FHD/1080p or HD/720p choice
 
-@REM Donwload in HD/720p
+@REM Download in HD/720p
 :VIDEOHD
-youtube-dl %FFMPEGLOC% -f 247+bestaudio/140 %MKVOutput% %VideoURL%
+youtube-dl %HDCONFIGLOC% %VideoURL%
 GOTO END
-@REM Donwload in HD/720p
+@REM Download in HD/720p
 
-@REM Donwload in FHD/1080p
+@REM Download in FHD/1080p
 :VIDEOFHD
-youtube-dl %FFMPEGLOC% -f 248+bestaudio/140 %MKVOutput% %VideoURL%
+youtube-dl %FHDCONFIGLOC% %VideoURL%
 @REM https://www.youtube.com/watch?v=ZREP2KoiWYA
 GOTO END
-@REM Donwload in FHD/1080p
+@REM Download in FHD/1080p
 
 @REM ending messeage when youtube-dl is not installed
 :YTDL
