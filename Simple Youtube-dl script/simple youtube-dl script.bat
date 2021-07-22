@@ -1,4 +1,5 @@
 @echo off
+SETLOCAL EnableDelayedExpansion
 
 @REM Create Downloads folder
 if not exist Downloads mkdir Downloads
@@ -13,45 +14,47 @@ if not exist ffmpeg\bin\ffmpeg.exe move ffmpeg*build ffmpeg
 if not exist ffmpeg\bin\ffmpeg.exe GOTO NOFFMPEGEND
 @REM Checking if FFMPEG is installed
 
-@REM Variables
-set AUDIOCONFIGLOC=--config-location Config\A-config.ini
-set HDCONFIGLOC=--config-location Config\V-HDconfig.ini
-set FHDCONFIGLOC=--config-location Config\V-FHDconfig.ini
-@REM Variables
-
 @REM Program start
 :PROGRAMSTART
 @REM Vidoe URL input
-set /P VideoURL=Enter video URL: 
+set /P VideoURL=* Please enter a video link: 
 @REM Vidoe URL input
 
 @REM Audio or Video Choice
-SET /P AudioOrVideo=Do you want to download audio only (A) or video (V)?
+SET /P AudioOrVideo=* Do you want to download audio only (A) or video (V)?
 IF /I %AudioOrVideo% EQU A ( GOTO AUDIOONLY ) else ( GOTO AUDIOANDVIDEO )
 @REM Audio or Video Choice
 
 @REM Audio only download
 :AUDIOONLY
-youtube-dl %AUDIOCONFIGLOC% %VideoURL%
+@REM loading the config file
+set CONFIGLOC=--config-location Config\audio-config.ini
+@REM loading the config file
+youtube-dl %CONFIGLOC% %VideoURL%
 GOTO END
 @REM Audio only download
 
 @REM FHD/1080p or HD/720p choice
 :AUDIOANDVIDEO
-SET /P HDorFHD= Do you want to download HD/720p or FHD/1080p? [HD/FHD]
+SET /P HDorFHD=* Do you want to download HD/720p or FHD/1080p? [HD/FHD]
 IF /I %HDorFHD% EQU HD ( GOTO VIDEOHD ) else ( GOTO VIDEOFHD )
 @REM FHD/1080p or HD/720p choice
 
 @REM Download in HD/720p
 :VIDEOHD
-youtube-dl %HDCONFIGLOC% %VideoURL%
+@REM loading the config file
+set CONFIGLOC=--config-location Config\video-hd-config.ini
+@REM loading the config file
+youtube-dl %CONFIGLOC% %VideoURL%
 GOTO END
 @REM Download in HD/720p
 
 @REM Download in FHD/1080p
 :VIDEOFHD
-youtube-dl %FHDCONFIGLOC% %VideoURL%
-@REM https://www.youtube.com/watch?v=ZREP2KoiWYA
+@REM loading the config file
+set CONFIGLOC=--config-location Config\video-fhd-config.ini
+@REM loading the config file
+youtube-dl %CONFIGLOC% %VideoURL%
 GOTO END
 @REM Download in FHD/1080p
 
