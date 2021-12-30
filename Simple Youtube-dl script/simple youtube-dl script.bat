@@ -9,6 +9,7 @@ if not exist Downloads mkdir Downloads
 if not exist youtube-dl.exe GOTO YTDL
 @REM Checking if youtube-dl is installed
 
+:FFMPEG
 @REM Checking if FFMPEG is installed
 if not exist ffmpeg\bin\ffmpeg.exe move ffmpeg*build ffmpeg
 if not exist ffmpeg\bin\ffmpeg.exe GOTO NOFFMPEGEND
@@ -66,7 +67,7 @@ echo * Your default browser will launch to the download link *
 echo *********************************************************
 Pause
 start https://ytdl-org.github.io/youtube-dl/index.html
-GOTO NOFFMPEGEND
+GOTO FFMPEG
 @REM ending messeage when youtube-dl is not installed
 
 @REM ending messeage when FFPMEG is NOT installed
