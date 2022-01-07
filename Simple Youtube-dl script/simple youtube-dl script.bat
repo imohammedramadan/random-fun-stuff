@@ -5,9 +5,9 @@ SETLOCAL EnableDelayedExpansion
 if not exist Downloads mkdir Downloads
 @REM Create Downloads folder
 
-@REM Checking if youtube-dl is installed
-if not exist youtube-dl.exe GOTO YTDL
-@REM Checking if youtube-dl is installed
+@REM Checking if yt-dlp is installed
+if not exist yt-dlp.exe GOTO YTDL
+@REM Checking if yt-dlp is installed
 
 :FFMPEG
 @REM Checking if FFMPEG is installed
@@ -31,7 +31,7 @@ IF /I %AudioOrVideo% EQU A ( GOTO AUDIOONLY ) else ( GOTO AUDIOANDVIDEO )
 @REM loading the config file
 set CONFIGLOC=--config-location Config\audio-config.ini
 @REM loading the config file
-youtube-dl %CONFIGLOC% %VideoURL%
+yt-dlp %CONFIGLOC% %VideoURL%
 GOTO END
 @REM Audio only download
 
@@ -46,7 +46,7 @@ IF /I %HDorFHD% EQU HD ( GOTO VIDEOHD ) else ( GOTO VIDEOFHD )
 @REM loading the config file
 set CONFIGLOC=--config-location Config\video-hd-config.ini
 @REM loading the config file
-youtube-dl %CONFIGLOC% %VideoURL%
+yt-dlp %CONFIGLOC% %VideoURL%
 GOTO END
 @REM Download in HD/720p
 
@@ -55,20 +55,20 @@ GOTO END
 @REM loading the config file
 set CONFIGLOC=--config-location Config\video-fhd-config.ini
 @REM loading the config file
-youtube-dl %CONFIGLOC% %VideoURL%
+yt-dlp %CONFIGLOC% %VideoURL%
 GOTO END
 @REM Download in FHD/1080p
 
-@REM ending messeage when youtube-dl is not installed
+@REM ending messeage when yt-dlp is not installed
 :YTDL
 echo *********************************************************
-echo *              Please download youtube-dl               *
+echo *              Please download yt-dlp               *
 echo * Your default browser will launch to the download link *
 echo *********************************************************
 Pause
-start https://ytdl-org.github.io/youtube-dl/index.html
+start https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe
 GOTO FFMPEG
-@REM ending messeage when youtube-dl is not installed
+@REM ending messeage when yt-dlp is not installed
 
 @REM ending messeage when FFPMEG is NOT installed
 :NOFFMPEGEND
