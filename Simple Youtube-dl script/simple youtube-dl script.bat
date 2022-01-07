@@ -61,10 +61,10 @@ GOTO END
 
 @REM ending messeage when yt-dlp is not installed
 :YTDL
-echo *********************************************************
-echo *              Please download yt-dlp               *
-echo * Your default browser will launch to the download link *
-echo *********************************************************
+echo *************************************************************
+echo * Please download yt-dlp and place it in the current folder *
+echo *   Your default browser will launch to the download link   *
+echo *************************************************************
 Pause
 start https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe
 GOTO FFMPEG
